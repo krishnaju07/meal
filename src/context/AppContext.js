@@ -14,20 +14,23 @@ const reducer = (state, action) => {
     case 'SET_CATEGORIES':
       return { ...state, categories: action.payload };
     case 'ADD_TO_CART':
-      return { ...state, cart: [action.payload] };
+      return { ...state, cart:action.payload };
     case 'REMOVE_FROM_CART':
+      const {MealId } = action.payload
+      console.log(state.cart.filter(item => item.idMeal != MealId),"skskskksks")
       return {
         ...state,
-        cart: state.cart.filter(item => item.id !== action.payload.id)
+        cart: state.cart.filter(item => item.idMeal != MealId)
       };
       case "UPDATE_CART_ITEM_QUANTITY":
         const { itemId, newQuantity } = action.payload;
+        console.log(itemId, newQuantity, "sskskkssk");
         return {
           ...state,
           cart: state.cart.map((item) =>
-            item.id === itemId ? { ...item, quantity: newQuantity } : item
+            item.idMeal === itemId ? { ...item, quantity: newQuantity } : item
           ),
-        };
+        };      
     case 'PLACE_ORDER':
       return {
         ...state,

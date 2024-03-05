@@ -12,7 +12,16 @@ import { useTheme } from "../context/context";
 function Header() {
   const { theme, Toggletheme } = useTheme();
   const { state } = useAppContext(); 
-  const cartItemCount = state.cart.reduce((acc, item) => acc + item.quantity, 0) || 0;
+  const cartItemCount = state.cart
+    .flat()
+    .reduce((acc, item) => {
+      if (item.quantity) {
+        return acc + item.quantity;
+      }
+      return acc;
+    }, 0);
+
+    console.log(state.cart,"ssssdf")
 
   return (
     <div className="navbar">

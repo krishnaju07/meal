@@ -19,7 +19,7 @@ const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
       <img src={item.strMealThumb} alt={item.strMealThumb} style={{ width: '50px', marginRight: '10px' }} />
       <div style={{ flexGrow: 1 }}>
         <Typography variant="h6">{item.strMeal}</Typography>
-        <Typography variant="subtitle1">Price: ${88}</Typography>
+        <Typography variant="subtitle1">Price: ₹{item.price}</Typography>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <IconButton onClick={() => handleQuantityChange(item.quantity - 1)}>

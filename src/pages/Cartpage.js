@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import CartItem from "./CartItem";
 import { Button, Typography, Grid, Divider } from "@mui/material";
-import "./Cartpage.css"; 
-import {  useNavigate } from "react-router-dom";
+import "./Cartpage.css";
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 
 const CartPage = () => {
@@ -10,7 +10,7 @@ const CartPage = () => {
     { id: 1, name: "Item 1", price: 10, quantity: 1, image: "image1.jpg" },
     { id: 2, name: "Item 2", price: 20, quantity: 2, image: "image2.jpg" },
   ]);
-  const { state,dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
 
@@ -26,23 +26,19 @@ const CartPage = () => {
       setShowSuccessMessage(true);
 
       setTimeout(() => {
-        navigate('/OrdersListingPage')
-      }, 2000); 
-    }, 2000); 
+        navigate("/OrdersListingPage");
+      }, 2000);
+    }, 2000);
   };
 
-  const handleRemoveItem = (itemId) => {
-    // Dispatch an action to remove the item from the cart
+  const handleRemoveItem = (MealId) => {
     dispatch({
       type: "REMOVE_FROM_CART",
-      payload: itemId,
+      payload: MealId,
     });
-    
-    // Update the local state of items if needed
-    setItems(items.filter((item) => item.id !== itemId));
   };
 
-  const totalPrice = items.reduce(
+  const totalPrice = state.cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -93,9 +89,13 @@ const CartPage = () => {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="body1">{item.strMeal} {}</Typography>
+                    <Typography variant="body1">
+                      {item.strMeal} {}
+                    </Typography>
                   </div>
-                  <Typography variant="body1">₹{88}</Typography>
+                  <Typography variant="body1">
+                    ₹{item.quantity * item.price}
+                  </Typography>
                 </div>
               ))}
               <Divider />

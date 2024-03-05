@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, List, ListItem, ListItemText, Divider, Box } from '@mui/material';
+import { useAppContext } from '../context/AppContext';
 
 const OrdersListingPage = () => {
+    const { state, dispatch } = useAppContext();
   const [orders, setOrders] = useState([
     {
       id: 1,
@@ -22,17 +24,17 @@ const OrdersListingPage = () => {
   return (
     <div>
       <Typography variant="h6" gutterBottom style={{ marginBottom: '20px' }}>Orders</Typography>
-      {orders.map((order, index) => (
-        <Box key={order.id} border={1} borderRadius={10} p={2} mb={2} boxShadow={3}>
+      {state.orders.map((order, index) => (
+        <Box key={order.idMeal} border={1} borderRadius={10} p={2} mb={2} boxShadow={3}>
           <List>
-            <React.Fragment key={order.id}>
+            <React.Fragment key={order.idMeal}>
               <ListItem>
-                <ListItemText primary={`Order ID: ${order.id}`} />
+                <ListItemText primary={`Order ID: ${order.idMeal}`} />
               </ListItem>
               <Divider />
-              {order.items.map((item, itemIndex) => (
-                <ListItem key={item.id}>
-                  <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity}`} />
+              {state.orders.map((item, itemIndex) => (
+                <ListItem key={item.idMeal}>
+                  <ListItemText primary={item.strMeal} secondary={`Quantity: ${item.quantity}`} />
                 </ListItem>
               ))}
             </React.Fragment>
