@@ -122,13 +122,13 @@ const MealsList = () => {
     if (!meal || !meal.idMeal) {
       return;
     }
-  
+
     const updatedCart = state.cart.map((item) =>
       item.idMeal === meal.idMeal
         ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 }
         : item
     );
-  
+
     const itemIndex = updatedCart.findIndex(
       (item) => item.idMeal === meal.idMeal
     );
@@ -142,12 +142,9 @@ const MealsList = () => {
       });
     }
   };
-  
 
   const handleGoBack = () => {
     setShowDetails(false);
-    setSelectedMeal(null);
-    navigate(-1);
   };
 
   return (
@@ -184,7 +181,7 @@ const MealsList = () => {
                       </IconButton>
                     ) : (
                       <>
-                        <div className="quantity-controls">
+                        <div>
                           <IconButton onClick={() => decrementItem(meal)}>
                             <RemoveIcon />
                           </IconButton>
@@ -210,7 +207,14 @@ const MealsList = () => {
         </>
       )}
 
-      {showDetails && <Itemdetails onBack={handleGoBack} meal={selectedMeal} />}
+      {showDetails && (
+        <Itemdetails
+          onBack={handleGoBack}
+          meal={selectedMeal}
+          incrementItem={incrementItem}
+          decrementItem={decrementItem}
+        />
+      )}
     </>
   );
 };

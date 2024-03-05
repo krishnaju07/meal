@@ -6,10 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 
 const CartPage = () => {
-  const [items, setItems] = useState([
-    { id: 1, name: "Item 1", price: 10, quantity: 1, image: "image1.jpg" },
-    { id: 2, name: "Item 2", price: 20, quantity: 2, image: "image2.jpg" },
-  ]);
   const { state, dispatch } = useAppContext();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
@@ -26,17 +22,19 @@ const CartPage = () => {
       setShowSuccessMessage(true);
 
       setTimeout(() => {
+        dispatch({ type: "PLACE_ORDER", payload: state.cart });
         navigate("/OrdersListingPage");
       }, 2000);
-    }, 2000);
+    }, 1000);
   };
 
-  const handleRemoveItem = (MealId) => {
-    dispatch({
-      type: "REMOVE_FROM_CART",
-      payload: MealId,
-    });
-  };
+//   const handleRemoveItem = (mealId) => {
+//     dispatch({
+//         type: "REMOVE_FROM_CART",
+//         payload: mealId, 
+//       });
+      
+//   };
 
   const totalPrice = state.cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -58,7 +56,7 @@ const CartPage = () => {
                   key={item.idMeal}
                   item={item}
                   onQuantityChange={handleQuantityChange}
-                  onRemoveItem={handleRemoveItem}
+                //   onRemoveItem={handleRemoveItem}
                 />
               ))}
             </div>
@@ -94,7 +92,9 @@ const CartPage = () => {
                     </Typography>
                   </div>
                   <Typography variant="body1">
-                    ₹{item.quantity * item.price}
+                    {`${item.price} * ${item.quantity} = ₹${
+                      item.quantity * item.price
+                    }`}
                   </Typography>
                 </div>
               ))}

@@ -6,13 +6,16 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 
 const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
-  const handleQuantityChange = (newQuantity) => {
-    onQuantityChange(item.idMeal, newQuantity);
-  };
+    const handleQuantityChange = (newQuantity) => {
+        if (newQuantity > 0) {
+          onQuantityChange(item.idMeal, newQuantity);
+        }
+      };
+      
 
-  const handleRemove = () => {
-    onRemoveItem(item.idMeal);
-  };
+//   const handleRemove = () => {
+//     onRemoveItem(item.idMeal);
+//   };
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
@@ -29,9 +32,9 @@ const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
         <IconButton onClick={() => handleQuantityChange(item.quantity + 1)}>
           <AddIcon />
         </IconButton>
-        <IconButton onClick={handleRemove}>
+        {/* <IconButton onClick={handleRemove}>
           <DeleteIcon />
-        </IconButton>
+        </IconButton> */}
       </div>
     </div>
   );

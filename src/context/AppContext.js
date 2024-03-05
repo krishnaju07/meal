@@ -15,16 +15,14 @@ const reducer = (state, action) => {
       return { ...state, categories: action.payload };
     case 'ADD_TO_CART':
       return { ...state, cart:action.payload };
-    case 'REMOVE_FROM_CART':
-      const {MealId } = action.payload
-      console.log(state.cart.filter(item => item.idMeal != MealId),"skskskksks")
-      return {
-        ...state,
-        cart: state.cart.filter(item => item.idMeal != MealId)
-      };
+      case 'REMOVE_FROM_CART':
+        const { mealId } = action.payload;
+        return {
+          ...state,
+          cart: state.cart.filter(item => item.idMeal !== mealId)
+        };      
       case "UPDATE_CART_ITEM_QUANTITY":
         const { itemId, newQuantity } = action.payload;
-        console.log(itemId, newQuantity, "sskskkssk");
         return {
           ...state,
           cart: state.cart.map((item) =>
