@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -7,7 +7,7 @@ import "./itemDetails.css";
 import { useAppContext } from "../context/AppContext";
 
 function ItemDetails({ meal, onBack, decrementItem, incrementItem }) {
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
 
   if (!meal) {
     return null;
@@ -31,8 +31,12 @@ function ItemDetails({ meal, onBack, decrementItem, incrementItem }) {
           <Typography variant="body1" gutterBottom>
             {meal.strInstructions}
           </Typography>
-          <br/>
-          <Typography variant="body1"  gutterBottom sx={{ textAlign: "left",fontWeight:900}}>
+          <br />
+          <Typography
+            variant="body1"
+            gutterBottom
+            sx={{ textAlign: "left", fontWeight: 900 }}
+          >
             Price: ₹{150}
           </Typography>
           <div className="quantity-controls">

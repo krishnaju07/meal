@@ -2,23 +2,20 @@ import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
 import IconButton from "@mui/material/IconButton";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getMealsByCategory } from "../services/api";
 import Itemdetails from "./Itemdetails";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import Header from "../components/Header";
 import { useAppContext } from "../context/AppContext";
 
 const MealsList = () => {
   const { strCategory } = useParams();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [meals, setMeals] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState([null]);
-  const [cartItems, setCartItems] = useState([]);
   const { state, dispatch } = useAppContext();
 
   useEffect(() => {

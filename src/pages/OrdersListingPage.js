@@ -29,7 +29,7 @@ const OrdersListingPage = () => {
           <List>
             <React.Fragment key={index}>
               <ListItem>
-                <ListItemText primary={`Order ID: ${ '000' + index + 1 }`} />
+                <ListItemText primary={`Order ID: ${"000" + index + 1}`} />
               </ListItem>
               <Divider />
               {order.map((meal, mealIndex) => (

@@ -13,11 +13,11 @@ export const ThemeProvider = ({ children }) => {
     setIsdarkmode((prevState) => !prevState);
   };
 
+  const theme = isDarkmode ? "Dark" : "Light";
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-  }, [isDarkmode]);
-
-  const theme = isDarkmode ? "Dark" : "Light";
+  }, [isDarkmode, theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, Toggletheme }}>

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../context/AppContext';
-import { getCategories } from '../services/api';
-import './Homepage.css';
+import React, { useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
+import { getCategories } from "../services/api";
+import "./Homepage.css";
 
 const HomePage = () => {
   const { state, dispatch } = useAppContext();
@@ -14,9 +14,9 @@ const HomePage = () => {
     const fetchCategories = async () => {
       try {
         const response = await getCategories();
-        dispatch({ type: 'SET_CATEGORIES', payload: response.categories });
+        dispatch({ type: "SET_CATEGORIES", payload: response.categories });
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
     };
 
@@ -39,10 +39,7 @@ const HomePage = () => {
             className="category-card"
             onClick={() => handleCategoryClick(category)}
           >
-            <img
-              src={category.strCategoryThumb}
-              alt={category.strCategory}
-            />
+            <img src={category.strCategoryThumb} alt={category.strCategory} />
             <Typography variant="subtitle1" align="center">
               {category.strCategory}
             </Typography>

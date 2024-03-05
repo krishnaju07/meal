@@ -1,27 +1,28 @@
 import React from "react";
-import { Badge, IconButton, Switch } from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Brightness4 as DarkIcon, WbSunny as LightIcon } from '@mui/icons-material';
+import {
+  Brightness4 as DarkIcon,
+  WbSunny as LightIcon,
+} from "@mui/icons-material";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import './Header.css'
+import "./Header.css";
 import { useAppContext } from "../context/AppContext";
 import { useTheme } from "../context/context";
 
 function Header() {
   const { theme, Toggletheme } = useTheme();
-  const { state } = useAppContext(); 
-  const cartItemCount = state.cart
-    .flat()
-    .reduce((acc, item) => {
-      if (item.quantity) {
-        return acc + item.quantity;
-      }
-      return acc;
-    }, 0);
+  const { state } = useAppContext();
+  const cartItemCount = state.cart.flat().reduce((acc, item) => {
+    if (item.quantity) {
+      return acc + item.quantity;
+    }
+    return acc;
+  }, 0);
 
-    console.log(state.cart,"ssssdf")
+  console.log(state.cart, "ssssdf");
 
   return (
     <div className="navbar">
@@ -36,7 +37,7 @@ function Header() {
       <ul>
         <li>
           <IconButton onClick={Toggletheme}>
-            {theme === 'Dark' ? <LightIcon /> : <DarkIcon />}
+            {theme === "Dark" ? <LightIcon /> : <DarkIcon />}
           </IconButton>
         </li>
         <li>
