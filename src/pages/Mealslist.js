@@ -5,9 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { getMealsByCategory } from "../services/api";
 import Itemdetails from "./Itemdetails";
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import Header from "../components/Header";
 
 const MealsList = () => {
   const { strCategory } = useParams();
@@ -16,15 +16,24 @@ const MealsList = () => {
   const [meals, setMeals] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showDetails, setShowDetails] = useState(false);
-  const [selectedMeal, setSelectedMeal] = useState(null);
-  const [orderCount, setOrderCount] = useState(0);
+  const [selectedMeal, setSelectedMeal] = useState([null]);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const itemsInCart = meals.filter((meal) => meal.quantity > 0);
+    setCartItems(itemsInCart);
+  }, [meals]);
 
   useEffect(() => {
     const fetchMeals = async () => {
       try {
         setLoading(true);
         const fetchedMeals = await getMealsByCategory(strCategory);
-        setMeals(fetchedMeals);
+        const mealsWithQuantity = fetchedMeals.map((meal) => ({
+          ...meal,
+          quantity: 0,
+        }));
+        setMeals(mealsWithQuantity);
         setSelectedCategory(strCategory);
         setLoading(false);
       } catch (error) {
@@ -35,8 +44,6 @@ const MealsList = () => {
 
     fetchMeals();
   }, [strCategory]);
-
-  const [meal, setMeal] = useState(null);
 
   useEffect(() => {
     const fetchMealDetails = async () => {
@@ -58,21 +65,16 @@ const MealsList = () => {
     fetchMealDetails();
   }, [selectedMeal]);
 
-
   const handleMealClick = (meal) => {
     setSelectedMeal(meal);
     setShowDetails(true);
-    setOrderCount(1); 
   };
-  
-  const handleIncrement = () => {
-    setOrderCount(orderCount + 1);
-  };
-  
-  const handleDecrement = () => {
-    if (orderCount > 1) {
-      setOrderCount(orderCount - 1);
-    }
+
+  const handleAddToCart = (meal) => {
+    const updatedMeals = meals.map((m) =>
+      m.idMeal === meal.idMeal ? { ...m, quantity: m.quantity + 1 } : m
+    );
+    setMeals(updatedMeals);
   };
 
   const handleGoBack = () => {
@@ -84,45 +86,78 @@ const MealsList = () => {
   return (
     <>
       {!showDetails && (
-      <>
-      <Typography variant="h6" align="left" gutterBottom>
-        Meals in {selectedCategory}
-      </Typography>
-      {loading && <LinearProgress />}
-      <div className="meal-list">
-        {meals.map((meal, index) => (
-          <div key={index} className="meal-card">
-            <img src={meal.strMealThumb} alt={meal.strMeal} onClick={() => handleMealClick(meal)}/>
-            <div className="meal-details">
-              <Typography variant="subtitle1" gutterBottom>
-                {meal.strMeal}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                Price: ₹{150}
-              </Typography>
-              <div className="quantity-controls">
-                <IconButton onClick={handleDecrement}>
-                  <RemoveIcon />
-                </IconButton>
-                <Typography variant="body1">{orderCount}</Typography>
-                <IconButton onClick={handleIncrement}>
-                  <AddIcon />
-                </IconButton>
+        <>
+          <Typography variant="h6" align="left" gutterBottom>
+            Meals in {selectedCategory}
+          </Typography>
+          {loading && <LinearProgress />}
+          <div className="meal-list">
+            {meals.map((meal, index) => (
+              <div key={index} className="meal-card">
+                <img
+                  src={meal.strMealThumb}
+                  alt={meal.strMeal}
+                  onClick={() => handleMealClick(meal)}
+                />
+                <div className="meal-details">
+                  <Typography variant="subtitle1" gutterBottom>
+                    {meal.strMeal}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Price: ₹{150}
+                  </Typography>
+                  <div className="quantity-controls">
+                    {meal.quantity === 0 ? (
+                      <IconButton
+                        color="primary"
+                        aria-label="add to cart"
+                        onClick={() => handleAddToCart(meal)}
+                      >
+                        <Typography variant="body2">Add to Cart</Typography>
+                      </IconButton>
+                    ) : (
+                      <>
+                        <div className="quantity-controls">
+                          <IconButton
+                            onClick={() =>
+                              handleAddToCart({ ...meal, quantity: meal.quantity - 1 })
+                            }
+                          >
+                            <RemoveIcon />
+                          </IconButton>
+                          <Typography
+                            variant="body1"
+                            style={{ margin: "0 8px" }}
+                          >
+                            {meal.quantity}
+                          </Typography>
+                          <IconButton
+                            onClick={() =>
+                              handleAddToCart({ ...meal, quantity: meal.quantity + 1 })
+                            }
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-            <IconButton
-              color="primary"
-              aria-label="add to cart"
-            >
-              <Typography variant="body2">Add to Cart</Typography>
-            </IconButton>
+            ))}
           </div>
-        ))}
-      </div>
-    </>
+        </>
       )}
 
-      {showDetails && <Itemdetails onBack={handleGoBack} meal={selectedMeal} />}
+      {showDetails && (
+        <Itemdetails
+          onBack={handleGoBack}
+          meal={selectedMeal}
+          cartItems={cartItems}
+          increment={() => setSelectedMeal({ ...selectedMeal, quantity: selectedMeal.quantity + 1 })}
+          decrement={() => setSelectedMeal({ ...selectedMeal, quantity: selectedMeal.quantity - 1 })}
+        />
+      )}
     </>
   );
 };

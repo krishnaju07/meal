@@ -1,26 +1,37 @@
 import React from 'react';
-import { Typography, Button } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
 
 const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
-  const handleIncrement = () => {
-    onQuantityChange(item.id, item.quantity + 1);
+  const handleQuantityChange = (newQuantity) => {
+    onQuantityChange(item.id, newQuantity);
   };
 
-  const handleDecrement = () => {
-    if (item.quantity > 1) {
-      onQuantityChange(item.id, item.quantity - 1);
-    }
+  const handleRemove = () => {
+    onRemoveItem(item.id);
   };
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <Typography variant="subtitle1">{item.name}</Typography>
-      <Typography variant="body1">Price: ${item.price}</Typography>
-      <div>
-        <Button variant="outlined" onClick={handleDecrement}>-</Button>
-        <Typography variant="body1">{item.quantity}</Typography>
-        <Button variant="outlined" onClick={handleIncrement}>+</Button>
-        <Button variant="contained" color="error" onClick={() => onRemoveItem(item.id)}>Remove</Button>
+    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+      <img src={item.image} alt={item.name} style={{ width: '50px', marginRight: '10px' }} />
+      <div style={{ flexGrow: 1 }}>
+        <Typography variant="h6">{item.name}</Typography>
+        <Typography variant="subtitle1">Price: ${item.price}</Typography>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <IconButton onClick={() => handleQuantityChange(item.quantity - 1)}>
+          <RemoveIcon />
+        </IconButton>
+        <Typography>{item.quantity}</Typography>
+        <IconButton onClick={() => handleQuantityChange(item.quantity + 1)}>
+          <AddIcon />
+        </IconButton>
+        <IconButton onClick={handleRemove}>
+          <DeleteIcon /> {/* Use DeleteIcon instead of "Remove" text */}
+        </IconButton>
       </div>
     </div>
   );

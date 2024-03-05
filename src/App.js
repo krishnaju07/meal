@@ -6,9 +6,12 @@ import { AppProvider } from './context/AppContext';
 import MealsList from './pages/Mealslist';
 import Cartpage from './pages/Cartpage';
 import OrdersListingPage from './pages/OrdersListingPage';
+import { ThemeProvider } from './context/context';
+import './App.css'
 
 function App() {
   return (
+    <ThemeProvider className='data-theme'>
     <AppProvider>
       <Router>
         <Header />
@@ -20,6 +23,7 @@ function App() {
         </Routes>
       </Router>
     </AppProvider>
+    </ThemeProvider>
   );
 }
 

@@ -24,3 +24,18 @@ ul li{
   font-size: 18px;
   cursor: pointer;
 }
+
+.root {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+[data-theme='Dark'] {
+  --bg-color: black;
+  --text-color: white;
+}
+
+[data-theme='Light'] {
+  --bg-color: white;
+  --text-color: black;
+}
