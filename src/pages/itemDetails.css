@@ -1,0 +1,36 @@
+.meal-details-container {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .meal-image {
+    flex: 1;
+  }
+  
+  .meal-image img {
+    width: 70%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .meal-info {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .quantity-controls button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .quantity-controls button:focus {
+    outline: none;
+  }
+  

@@ -1,0 +1,52 @@
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.category-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.category-card h2 {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.meal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.meal-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.meal-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.meal-card .meal-details {
+  margin-top: 10px;
+}
+
+.meal-card .meal-details p {
+  margin: 5px 0;
+}
+
+.meal-card .meal-details .add-to-cart-btn {
+  margin-top: 10px;
+}
