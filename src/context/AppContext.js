@@ -8,17 +8,26 @@ const initialState = {
   orders: []
 };
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_CATEGORIES':
       return { ...state, categories: action.payload };
     case 'ADD_TO_CART':
-      return { ...state, cart: [...state.cart, action.payload] };
+      return { ...state, cart: [action.payload] };
     case 'REMOVE_FROM_CART':
       return {
         ...state,
         cart: state.cart.filter(item => item.id !== action.payload.id)
       };
+      case "UPDATE_CART_ITEM_QUANTITY":
+        const { itemId, newQuantity } = action.payload;
+        return {
+          ...state,
+          cart: state.cart.map((item) =>
+            item.id === itemId ? { ...item, quantity: newQuantity } : item
+          ),
+        };
     case 'PLACE_ORDER':
       return {
         ...state,
@@ -32,6 +41,8 @@ const reducer = (state, action) => {
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  console.log('Initial State:', state);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

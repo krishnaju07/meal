@@ -2,16 +2,17 @@ import React from "react";
 import { Badge, IconButton, Switch } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Brightness4 as DarkIcon, WbSunny as LightIcon } from '@mui/icons-material';import "./Header.css";
+import { Brightness4 as DarkIcon, WbSunny as LightIcon } from '@mui/icons-material';
+import "./Header.css";
 import { Link } from "react-router-dom";
-import { useTheme } from "../context/context";
 import './Header.css'
+import { useAppContext } from "../context/AppContext";
+import { useTheme } from "../context/context";
 
-function Header({ cartItems }) {
-  const {theme,Toggletheme} = useTheme()
-  console.log(theme,"sksksks")
-  const cartItemCount = cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0;
-
+function Header() {
+  const { theme, Toggletheme } = useTheme();
+  const { state } = useAppContext(); 
+  const cartItemCount = state.cart.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   return (
     <div className="navbar">
@@ -24,7 +25,7 @@ function Header({ cartItems }) {
         />
       </Link>
       <ul>
-      <li>
+        <li>
           <IconButton onClick={Toggletheme}>
             {theme === 'Dark' ? <LightIcon /> : <DarkIcon />}
           </IconButton>

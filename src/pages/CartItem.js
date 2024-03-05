@@ -3,23 +3,23 @@ import IconButton from '@mui/material/IconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
+import DeleteIcon from '@mui/icons-material/Delete'; 
 
 const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
   const handleQuantityChange = (newQuantity) => {
-    onQuantityChange(item.id, newQuantity);
+    onQuantityChange(item.idMeal, newQuantity);
   };
 
   const handleRemove = () => {
-    onRemoveItem(item.id);
+    onRemoveItem(item.idMeal);
   };
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-      <img src={item.image} alt={item.name} style={{ width: '50px', marginRight: '10px' }} />
+      <img src={item.strMealThumb} alt={item.strMealThumb} style={{ width: '50px', marginRight: '10px' }} />
       <div style={{ flexGrow: 1 }}>
-        <Typography variant="h6">{item.name}</Typography>
-        <Typography variant="subtitle1">Price: ${item.price}</Typography>
+        <Typography variant="h6">{item.strMeal}</Typography>
+        <Typography variant="subtitle1">Price: ${88}</Typography>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <IconButton onClick={() => handleQuantityChange(item.quantity - 1)}>
@@ -30,7 +30,7 @@ const CartItem = ({ item, onQuantityChange, onRemoveItem }) => {
           <AddIcon />
         </IconButton>
         <IconButton onClick={handleRemove}>
-          <DeleteIcon /> {/* Use DeleteIcon instead of "Remove" text */}
+          <DeleteIcon />
         </IconButton>
       </div>
     </div>

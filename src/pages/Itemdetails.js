@@ -8,7 +8,6 @@ import './itemDetails.css';
 function ItemDetails({ meal, onBack }) {
   const [quantity, setQuantity] = useState(1);
 
-
   const handleIncrement = () => {
     setQuantity(quantity + 1);
   };
@@ -37,12 +36,12 @@ function ItemDetails({ meal, onBack }) {
         <div className="meal-info">
           <Typography variant="h5" sx={{ textAlign: 'left' }}>{meal.strMeal}</Typography>
           <Typography variant="body1" gutterBottom>{meal.strInstructions}</Typography>
-          <Typography variant="body1" gutterBottom sx={{ textAlign: 'left' }}>Price: ₹{quantity * 150}</Typography>
+          <Typography variant="body1" gutterBottom sx={{ textAlign: 'left' }}>Price: ₹{meal.quantity * 150}</Typography>
           <div className="quantity-controls">
             <IconButton onClick={handleDecrement}>
               <RemoveIcon />
             </IconButton>
-            <Typography variant="body1">{meal.quantity || 0}</Typography>
+            <Typography variant="body1">{meal.quantity}</Typography>
             <IconButton onClick={handleIncrement}>
               <AddIcon />
             </IconButton>

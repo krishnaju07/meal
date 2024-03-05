@@ -1,37 +1,44 @@
 import React, { useState } from "react";
 import CartItem from "./CartItem";
 import { Button, Typography, Grid, Divider } from "@mui/material";
-import "./Cartpage.css"; // Import CSS file for animation
+import "./Cartpage.css"; 
+import {  useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 const CartPage = () => {
   const [items, setItems] = useState([
     { id: 1, name: "Item 1", price: 10, quantity: 1, image: "image1.jpg" },
     { id: 2, name: "Item 2", price: 20, quantity: 2, image: "image2.jpg" },
-    // Add more items as needed
   ]);
+  const { state,dispatch } = useAppContext();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    setItems(
-      items.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    dispatch({
+      type: "UPDATE_CART_ITEM_QUANTITY",
+      payload: { itemId, newQuantity },
+    });
   };
 
   const handlePlaceOrder = () => {
     setTimeout(() => {
-      // Show the success message
       setShowSuccessMessage(true);
 
-      // Navigate to the success page after some delay
       setTimeout(() => {
-        // history.push("/order-success");
-      }, 2000); // Change the delay as needed
-    }, 2000); // Change the timeout duration as needed
+        navigate('/OrdersListingPage')
+      }, 2000); 
+    }, 2000); 
   };
 
   const handleRemoveItem = (itemId) => {
+    // Dispatch an action to remove the item from the cart
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: itemId,
+    });
+    
+    // Update the local state of items if needed
     setItems(items.filter((item) => item.id !== itemId));
   };
 
@@ -50,9 +57,9 @@ const CartPage = () => {
         <>
           <Grid item xs={12} lg={8}>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {items.map((item) => (
+              {state.cart.map((item) => (
                 <CartItem
-                  key={item.id}
+                  key={item.idMeal}
                   item={item}
                   onQuantityChange={handleQuantityChange}
                   onRemoveItem={handleRemoveItem}
@@ -75,9 +82,9 @@ const CartPage = () => {
             >
               <Typography variant="h6">Summary</Typography>
               <Divider />
-              {items.map((item) => (
+              {state.cart.map((item) => (
                 <div
-                  key={item.id}
+                  key={item.idMeal}
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -86,9 +93,9 @@ const CartPage = () => {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="body1">{item.name}</Typography>
+                    <Typography variant="body1">{item.strMeal} {}</Typography>
                   </div>
-                  <Typography variant="body1">₹{item.price}</Typography>
+                  <Typography variant="body1">₹{88}</Typography>
                 </div>
               ))}
               <Divider />
